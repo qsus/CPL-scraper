@@ -86,6 +86,6 @@ try:
 	while True:
 		print("Updating matches...")
 		updateMatches()
-		sleep(10)
+		sleep(60 if production else 10)
 except KeyboardInterrupt:
 	print("Exiting...")
