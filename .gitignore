@@ -1,1 +1,3 @@
+# ignore .env (security) and matches.json (prevent bot spam - always skip)
 /.env
+/matches.json

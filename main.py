@@ -82,7 +82,9 @@ def updateMatches():
 				if oldGameObject["result1"] != gameObject["result1"]:
 					sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
 
+
 try:
+	if production: print("\033[91mProduction mode enabled!\033[0m")
 	while True:
 		print("Updating matches...")
 		updateMatches()
