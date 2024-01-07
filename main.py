@@ -4,13 +4,10 @@ from bs4 import BeautifulSoup
 import json
 from time import sleep
 
-# load webhook from .env
-import os
-from dotenv import load_dotenv
-load_dotenv()
-webhook = os.getenv('webhook')
-
-production = False
+# load config
+config = json.load("config.json")
+webhook = config["webhook"]
+production = config["production"]
 
 def sendWebhook(message):
 	print(message.replace("*", "").replace("_", ""))
