@@ -5,7 +5,7 @@ import json
 from time import sleep
 
 # load config
-config = json.load("config.json")
+config = json.load(open("config.json", "r"))
 webhook = config["webhook"]
 production = config["production"]
 

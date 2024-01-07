@@ -1,4 +1,4 @@
 {
-	"webhook"="https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-	"production: false
+	"webhook": "https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+	"production": false
 }
