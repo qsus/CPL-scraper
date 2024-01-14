@@ -32,6 +32,7 @@ def updateMatches():
 			"date": gameHTML[1].text[17:],
 			"player1": gameHTML[2].text[5:-1],
 			"player2": gameHTML[6].text[5:-1],
+			"resultStatus": None,
 			"result1": gameHTML[3].text,
 			"result2": gameHTML[5].text
 		}
@@ -43,6 +44,15 @@ def updateMatches():
 		else:
 			gameObject["dateStatus"] = "offered"
 		
+		# determine result status; only checking result 1
+		if gameObject["result1"] == "":
+			gameObject["resultStatus"] = "no"
+		elif gameHTML[3].find("span") == None: # result not colored in gray
+			gameObject["resultStatus"] = "approved"
+		else:
+			gameObject["resultStatus"] = "offered"
+
+
 		gameObjects.append(gameObject)
 
 	# save to matches.json
@@ -66,7 +76,8 @@ def updateMatches():
 		for gameObject in gameObjects:
 			if oldGameObject["table"] == gameObject["table"]:
 				# compare date
-				if oldGameObject["dateStatus"] != gameObject["dateStatus"]:
+				if oldGameObject["dateStatus"] != gameObject["dateStatus"] \
+				or oldGameObject["date"]       != gameObject["date"]:
 					match gameObject["dateStatus"]:
 						case "no":
 							sendWebhook(f"Navržený termín zápasu mezi **{gameObject['player1']}** a **{gameObject['player2']}** byl __odvolán__.")
@@ -76,8 +87,16 @@ def updateMatches():
 							sendWebhook(f"Pro zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** byl __schválen__ termín **{gameObject['date']}**.")
 					
 				# compare results (comparing only one result is enough)
-				if oldGameObject["result1"] != gameObject["result1"]:
-					sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+				if oldGameObject["resultStatus"] != gameObject["resultStatus"] \
+				or oldGameObject["result1"]      != gameObject["result1"]:
+					match gameObject["resultStatus"]:
+						case "no":
+							sendWebhook(f"<@865535260804775936> Error, please check console. (resultStatus == no)")
+						case "offered":
+							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil nepotvrzeným výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+						case "approved":
+							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil potvrzeným výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+					
 
 
 try:
@@ -88,3 +107,5 @@ try:
 		sleep(60 if production else 10)
 except KeyboardInterrupt:
 	print("Exiting...")
+except:
+	sendWebhook(f"<@865535260804775936> Error, please check console.")
