@@ -7,18 +7,20 @@ from time import sleep
 # load config
 config = json.load(open("config.json", "r"))
 webhook = config["webhook"]
-production = config["production"]
+sendWebhooks = config["sendWebhooks"]
+webUrl = config["webUrl"]
+interval = config["interval"]
 
 def sendWebhook(message):
 	print(message.replace("*", "").replace("_", ""))
-	if production: requests.post(webhook, json={"content": message})
+	if sendWebhooks: requests.post(webhook, json={"content": message})
 
 def updateMatches():
 	# read old data
 	oldData = json.load(open("matches.json", "r"))
 	oldGameObjects = oldData["matches"]
 	
-	res = requests.get("https://cz.euroleague.cz/php/curround.php")
+	res = requests.get(webUrl + "curround.php")
 	soup = BeautifulSoup(res.text, "html.parser")
 	gameHTMLs = soup.findAll('tr', attrs={'class':'listrow'})
 	# find round description; reliability questionable
@@ -34,7 +36,8 @@ def updateMatches():
 			"player2": gameHTML[6].text[5:-1],
 			"resultStatus": None,
 			"result1": gameHTML[3].text,
-			"result2": gameHTML[5].text
+			"result2": gameHTML[5].text,
+			"resultUrl": gameHTML[0].find("a")["href"]
 		}
 		# deteremine date status
 		if gameObject["date"] == "":
@@ -93,19 +96,21 @@ def updateMatches():
 						case "no":
 							sendWebhook(f"<@865535260804775936> Error, please check console. (resultStatus == no)")
 						case "offered":
-							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil nepotvrzeným výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil nepotvrzeným [výsledkem]({webUrl + gameObject['resultUrl']}) **{gameObject['result1']}:{gameObject['result2']}**.")
 						case "approved":
-							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil potvrzeným výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil potvrzeným [výsledkem]({webUrl + gameObject['resultUrl']}) **{gameObject['result1']}:{gameObject['result2']}**.")
 					
 
 
 try:
-	if production: print("\033[91mProduction mode enabled!\033[0m")
+	print("\033[91mWebhooks will be sent: " + str(sendWebhooks) + "\033[0m")
 	while True:
 		print("Updating matches...")
 		updateMatches()
-		sleep(60 if production else 10)
+		# sleep(60 if production else 10)
+		sleep(interval)
 except KeyboardInterrupt:
 	print("Exiting...")
-except:
+except Exception as e:
 	sendWebhook(f"<@865535260804775936> Error, please check console.")
+	print(e)
