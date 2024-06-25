@@ -32,8 +32,8 @@ def updateMatches():
 			"table": gameHTML[0].text,
 			"dateStatus": None,
 			"date": gameHTML[1].text[17:],
-			"player1": gameHTML[2].text[5:-1],
-			"player2": gameHTML[6].text[5:-1],
+			"player1": gameHTML[2].text[3:-1],
+			"player2": gameHTML[6].text[3:-1],
 			"resultStatus": None,
 			"result1": gameHTML[3].text,
 			"result2": gameHTML[5].text,
@@ -114,3 +114,19 @@ except KeyboardInterrupt:
 except Exception as e:
 	sendWebhook(f"<@865535260804775936> Error, please check console.")
 	print(e)
+
+# new implementation using classes
+
+class Scraper:
+	def __init__(self, config):
+		self.config = config
+		pass
+
+	def runOnce(self):
+		# every ten seconds
+		pass
+
+	def runRepeteadly(self):
+		while True:
+			sleep(self.config[0]["interval"]) # TODO: resolve intervals individually
+			self.runOnce()
