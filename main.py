@@ -8,6 +8,7 @@ from time import sleep
 config = json.load(open("config.json", "r"))
 webhook = config["webhook"]
 production = config["production"]
+webUrl = "https://euroleague.cz/php/"
 
 def sendWebhook(message):
 	print(message.replace("*", "").replace("_", ""))
@@ -18,7 +19,7 @@ def updateMatches():
 	oldData = json.load(open("matches.json", "r"))
 	oldGameObjects = oldData["matches"]
 	
-	res = requests.get("https://cz.euroleague.cz/php/curround.php")
+	res = requests.get("https://euroleague.cz/php/curround.php")
 	soup = BeautifulSoup(res.text, "html.parser")
 	gameHTMLs = soup.findAll('tr', attrs={'class':'listrow'})
 	# find round description; reliability questionable
@@ -29,12 +30,13 @@ def updateMatches():
 		gameObject = {
 			"table": gameHTML[0].text,
 			"dateStatus": None,
-			"date": gameHTML[1].text[17:],
-			"player1": gameHTML[2].text[5:-1],
-			"player2": gameHTML[6].text[5:-1],
+			"date": gameHTML[1].text[19:],
+			"player1": gameHTML[2].text[3:-1],
+			"player2": gameHTML[6].text[3:-1],
 			"resultStatus": None,
 			"result1": gameHTML[3].text,
-			"result2": gameHTML[5].text
+			"result2": gameHTML[5].text,
+            "resultUrl": gameHTML[0].find("a")["href"]
 		}
 		# deteremine date status
 		if gameObject["date"] == "":
@@ -80,11 +82,11 @@ def updateMatches():
 				or oldGameObject["date"]       != gameObject["date"]:
 					match gameObject["dateStatus"]:
 						case "no":
-							sendWebhook(f"Navržený termín zápasu mezi **{gameObject['player1']}** a **{gameObject['player2']}** byl __odvolán__.")
+							sendWebhook(f"The date for the match between **{gameObject['player1']}** and **{gameObject['player2']}** was __withdrawn__.")
 						case "offered":
-							sendWebhook(f"Pro zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** byl __navržen__ termín **{gameObject['date']}**.")
+							sendWebhook(f"**{gameObject['date']}** is now the __offered__ date for the match between **{gameObject['player1']}** and **{gameObject['player2']}**.")
 						case "approved":
-							sendWebhook(f"Pro zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** byl __schválen__ termín **{gameObject['date']}**.")
+							sendWebhook(f"**{gameObject['date']}** is now the __approved__ date for the match between **{gameObject['player1']}** and **{gameObject['player2']}**.")
 					
 				# compare results (comparing only one result is enough)
 				if oldGameObject["resultStatus"] != gameObject["resultStatus"] \
@@ -93,9 +95,9 @@ def updateMatches():
 						case "no":
 							sendWebhook(f"<@865535260804775936> Error, please check console. (resultStatus == no)")
 						case "offered":
-							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil nepotvrzeným výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+							sendWebhook(f"The match between **{gameObject['player1']}** and **{gameObject['player2']}** has finished with the [result]({webUrl + gameObject['resultUrl']}) **{gameObject['result1']}:{gameObject['result2']}**.")
 						case "approved":
-							sendWebhook(f"Zápas mezi **{gameObject['player1']}** a **{gameObject['player2']}** skončil potvrzeným výsledkem **{gameObject['result1']}:{gameObject['result2']}**.")
+							sendWebhook(f"The match between **{gameObject['player1']}** and **{gameObject['player2']}** has finished with the confirmed [result]({webUrl + gameObject['resultUrl']}) **{gameObject['result1']}:{gameObject['result2']}**.")
 					
 
 
@@ -107,5 +109,6 @@ try:
 		sleep(60 if production else 10)
 except KeyboardInterrupt:
 	print("Exiting...")
-except:
+except Exception as e:
 	sendWebhook(f"<@865535260804775936> Error, please check console.")
+	print(e)
