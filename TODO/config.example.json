@@ -1,0 +1,31 @@
+{
+	"sendWebhooks": false,
+	"interval": 10,
+	"sites": [
+		{
+			"name": "CPL",
+			"url": "https://cz.euroleague.cz/php/",
+			"webhook": "https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			"messages": {
+				"dateOffered": "Pro zápas mezi **{player1}** a **{player2}** byl __navržen__ termín **{date}**.",
+				"dateApproved": "Pro zápas mezi **{player1}** a **{player2}** byl __scválen__ termín **{date}**.",
+				"dateWithdrawn": "Navržený termín zápasu mezi **{player1}** a **{player2}** byl __odvolán__.",
+				"resultOffered": "Zápas mezi **{player1}** a **{player2}** skončil nepotvrzeným [výsledkem]({resultUrl}) **{result1}:{result2}**.",
+				"resultConfirmed": "Zápas mezi **{player1}** a **{player2}** skončil potvrzeným [výsledkem]({resultUrl}) **{result1}:{result2}**."
+			}
+		},
+		{
+			"name": "EL",
+			"url": "https://euroleague.cz/php/",
+			"webhook": "https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			"messages": {
+				"dateOffered": "EN Pro zápas mezi **{player1}** a **{player2}** byl __navržen__ termín **{date}**.",
+				"dateApproved": "EN Pro zápas mezi **{player1}** a **{player2}** byl __scválen__ termín **{date}**.",
+				"dateWithdrawn": "EN Navržený termín zápasu mezi **{player1}** a **{player2}** byl __odvolán__.",
+				"resultOffered": "EN Zápas mezi **{player1}** a **{player2}** skončil nepotvrzeným [výsledkem]({resultUrl}) **{result1}:{result2}**.",
+				"resultConfirmed": "EN Zápas mezi **{player1}** a **{player2}** skončil potvrzeným [výsledkem]({resultUrl}) **{result1}:{result2}**."
+			}
+		}
+	],
+	"errorMessage": "<@865535260804775936> Error, please check console."
+}
