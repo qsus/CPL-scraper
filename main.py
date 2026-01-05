@@ -84,7 +84,7 @@ class Scraper:
 				if currentGameData["table"] == newGameData["table"]:
 					message: str | None = None
 					# compare date
-					if currentGameData["dateStatus"] == newGameData["dateStatus"] \
+					if currentGameData["dateStatus"] != newGameData["dateStatus"] \
 					or currentGameData["date"]       != newGameData["date"]:
 						match newGameData["dateStatus"]:
 							case "no":
