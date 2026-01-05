@@ -1,0 +1,18 @@
+{
+	"webhook": "https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+	"webUrl": "https://euroleague.cz/php/",
+	"dateOffset": 20,
+	"sendWebhooks": false,
+	"interval": 10,
+	"messages": {
+		"dateRevoked": "The date for the match between **{player1}** and **{player2}** was __withdrawn__.",
+		"dateOffered": "**{date}** is now the __offered__ date for the match between **{player1}** and **{player2}**.",
+		"dateAccepted": "**{date}** is now the __approved__ date for the match between **{player1}** and **{player2}**.",
+		"resultRevoked": "The match result between **{player1}** and **{player2}** has been __removed__.",
+		"resultOffered": "The match between **{player1}** and **{player2}** has finished with the [result]({resultUrl}) **{result1}:{result2}**.",
+		"resultApproved": "The match between **{player1}** and **{player2}** has finished with the confirmed [result]({resultUrl}) **{result1}:{result2}**."
+	},
+	"discordNotifications": {
+		"examplePlayer": "000000000000000000"
+	}
+}

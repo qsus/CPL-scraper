@@ -1,0 +1,18 @@
+{
+	"webhook": "https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+	"webUrl": "https://cz.euroleague.cz/php/",
+	"dateOffset": 17,
+	"sendWebhooks": false,
+	"interval": 10,
+	"messages": {
+		"dateRevoked": "Navržený termín zápasu mezi **{player1}** a **{player2}** byl __odvolán__.",
+		"dateOffered": "Pro zápas mezi **{player1}** a **{player2}** byl __navržen__ termín **{date}**.",
+		"dateAccepted": "Pro zápas mezi **{player1}** a **{player2}** byl __schválen__ termín **{date}**.",
+		"resultRevoked": "Výsledek zápasu mezi **{player1}** a **{player2}** __zmizel__.",
+		"resultOffered": "Zápas mezi **{player1}** a **{player2}** skončil nepotvrzeným [výsledkem]({resultUrl}) **{result1}:{result2}**.",
+		"resultApproved": "Zápas mezi **{player1}** a **{player2}** skončil potvrzeným [výsledkem]({resultUrl}) **{result1}:{result2}**."
+	},
+	"discordNotifications": {
+		"examplePlayer": "000000000000000000"
+	}
+}

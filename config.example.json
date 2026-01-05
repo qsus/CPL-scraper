@@ -1,7 +1,0 @@
-{
-	"webhook": "https://discord.com/api/webhooks/1111111111111111111/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-	"webUrl": "https://cz.euroleague.cz/php/",
-	"webUrl-example": "https://euroleague.cz/php/",
-	"sendWebhooks": false,
-	"interval": 10
-}
