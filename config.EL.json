@@ -4,6 +4,7 @@
 	"dateOffset": 20,
 	"sendWebhooks": false,
 	"interval": 10,
+	"errorMessage": "An error occurred. Please check the console for details. <@000000000000000000>",
 	"messages": {
 		"dateRevoked": "The date for the match between **{player1}** and **{player2}** was __withdrawn__.",
 		"dateOffered": "**{date}** is now the __offered__ date for the match between **{player1}** and **{player2}**.",

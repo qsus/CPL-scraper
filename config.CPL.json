@@ -4,6 +4,7 @@
 	"dateOffset": 17,
 	"sendWebhooks": false,
 	"interval": 10,
+	"errorMessage": "An error occurred. Please check the console for details. <@000000000000000000>",
 	"messages": {
 		"dateRevoked": "Navržený termín zápasu mezi **{player1}** a **{player2}** byl __odvolán__.",
 		"dateOffered": "Pro zápas mezi **{player1}** a **{player2}** byl __navržen__ termín **{date}**.",

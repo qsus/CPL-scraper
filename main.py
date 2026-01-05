@@ -133,5 +133,5 @@ try:
 except KeyboardInterrupt:
 	print("Exiting...")
 except Exception as e:
-	scraper.sendWebhook(f"<@865535260804775936> Error, please check console.")
+	scraper.sendWebhook(config["errorMessage"])
 	print(e)
